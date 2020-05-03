@@ -9,6 +9,7 @@ const getCollectionFn = collection => {
     if (!_col) {
       const db = await dbConnection();
       _col = await db.collection(collection);
+      console.log('colllllll',_col)
     }
 
     return _col;

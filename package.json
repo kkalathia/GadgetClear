@@ -12,7 +12,9 @@
   "dependencies": {
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
     "fonoapi-nodejs": "^0.1.1",
-    "mongodb": "^3.5.5"
+    "mongodb": "^3.5.7"
   }
 }
