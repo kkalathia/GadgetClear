@@ -80,18 +80,20 @@ app.use("/",async (req,res,next)=>{
         // Validate email address
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(username)) {
 			flag =1;
-			console.log("here")
+		
 		}
 	}
 	let User;
 	 if(flag===0){
 	 //let email=req.body.email;
 	User=await userData.checkUser(username);
-	console.log(User);
+
 	 }
 	 else{
+		username=username.toLowerCase();
 		 User=await userData.checkEmail(username);
-		 console.log(User);
+		
+		 
 	 }
 	 if(User===undefined){
 	  res.status(401).render('login', { title:"Login",
@@ -145,6 +147,11 @@ app.use("/",async (req,res,next)=>{
 		heading:"Login",
 		error: "enter a valid username"});
 	  }
+	  else if(!req.body.email){
+		res.render("login",{title:"Login",
+		heading:"Login",
+		error: "enter a valid email"});
+	  }
 	  else if(!req.body.password){
 		res.render("login",{title:"Login",
 		heading:"Login",
@@ -154,6 +161,7 @@ app.use("/",async (req,res,next)=>{
 		let username=req.body.username;
 		let password=req.body.password;
 		let email=req.body.email;
+		email=email.toLowerCase();
 	   let User=await userData.checkUser(username);
 		if(User===false){
 		 userData.createUser(username,email,password);

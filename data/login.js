@@ -15,7 +15,9 @@ async function createUser(username,email,password){
 		let newUser = {
              username,
              email,
-             hashedPassword
+             hashedPassword,
+             myDevices:[],
+             wishList:[]
 		};
 
 		const insertInfo = await userCollection.insertOne(newUser);
