@@ -11,11 +11,11 @@ async function createUser(username,email,password){
 		
 		
 		const userCollection = await users();
-        password=bcrypt.hashSync(password, 10)
+        hashedPassword=bcrypt.hashSync(password, 10)
 		let newUser = {
              username,
              email,
-             password
+             hashedPassword
 		};
 
 		const insertInfo = await userCollection.insertOne(newUser);
@@ -42,4 +42,19 @@ else{
 }
  }
 
-module.exports={createUser,checkUser};
+
+ async function checkEmail(email){
+   
+    const userCollection = await users();
+    
+const emailindb = await userCollection.findOne({ email: email });
+
+if (emailindb === null) {
+    return false;
+}
+else{
+    return emailindb;
+}
+ }
+
+module.exports={createUser,checkUser,checkEmail};

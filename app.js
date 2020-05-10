@@ -55,7 +55,8 @@ app.use("/",async (req,res,next)=>{
 ///login post
 
   app.post("/login",async(req,res)=>{
-    
+	
+	
 	if(!req.body.username && !req.body.password){
 	  res.render("login",{title:"Login",
 	  heading:"Login",
@@ -72,11 +73,27 @@ app.use("/",async (req,res,next)=>{
 	  error: "enter a valid password"});
 	}
    else{
-	 let username=req.body.username;
-	 let password=req.body.password;
+	   let flag=0;
+	let username=req.body.username;
+	let password=req.body.password;
+	if (/\@/.test(username)) {
+        // Validate email address
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(username)) {
+			flag =1;
+			console.log("here")
+		}
+	}
+	let User;
+	 if(flag===0){
 	 //let email=req.body.email;
-	let User=await userData.checkUser(username);
-	 if(User===false){
+	User=await userData.checkUser(username);
+	console.log(User);
+	 }
+	 else{
+		 User=await userData.checkEmail(username);
+		 console.log(User);
+	 }
+	 if(User===undefined){
 	  res.status(401).render('login', { title:"Login",
 	  heading:"Login",
 	   error: "Invalid username." });
@@ -85,7 +102,7 @@ app.use("/",async (req,res,next)=>{
 	 else {
 	  if (await bcrypt.compareSync(password,User.hashedPassword)) {
 		req.session.user=User;
-		console.log("entered")
+		
 	  }
 	  else{
 		  res.status(401).render('login', {title:"Login",
@@ -152,6 +169,13 @@ app.use("/",async (req,res,next)=>{
 
  });
 
+ app.get("/logout", async (req,res)=>{
+	let user=req.session.user.username;
+	req.session.flag=undefined;
+	req.session.destroy();
+	res.redirect("/");
+  });
+
   
 app.listen(3000, () => {
 	console.log("We've now got a server!");
@@ -183,10 +207,5 @@ app.use("*",async (req,res)=>{
 	res.status(404).json({error:"Page Not Found"});
   });
 
-app.get("/logout", async (req,res)=>{
-	let user=req.session.user.username;
-	req.session.flag=undefined;
-	req.session.destroy();
-	res.render("logout",{title:"Logged out",heading:"Logged out",username:user});
-  });
+
   
