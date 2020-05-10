@@ -95,7 +95,8 @@ app.use("/",async (req,res,next)=>{
 		
 		 
 	 }
-	 if(User===undefined){
+	 //console.log(User);
+	 if(User===false){
 	  res.status(401).render('login', { title:"Login",
 	  heading:"Login",
 	   error: "Invalid username." });
@@ -120,7 +121,7 @@ app.use("/",async (req,res,next)=>{
 	}
 	else {
 	  req.session.flag=true;
-	  res.render("user");
+	  res.render("user",{username:User.username});
 	}
   
    }
