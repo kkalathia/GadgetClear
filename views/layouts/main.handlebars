@@ -26,7 +26,13 @@
 					<a href="/reviews">Reviews</a>
 				</li>
 				<li style="float: right;">
-					<a href="/logout">Logout</a>
+					<!-- set session to true in your route to change login or logout button  -->
+				      {{#if session}}
+                    <a href="/logout">Logout</a>
+					{{else}}
+					 <a href="/login">Login</a>
+                {{/if}}	
+					
 				</li>
 			</ul>
 		</div>

@@ -52,7 +52,14 @@ app.use("/",async (req,res,next)=>{
 	} 
   });
 
+//login get 
+  app.get("/login", async (req,res)=>{
+	res.redirect("/");
+ }); 
 ///login post
+
+
+
 
   app.post("/login",async(req,res)=>{
 	
@@ -121,7 +128,7 @@ app.use("/",async (req,res,next)=>{
 	}
 	else {
 	  req.session.flag=true;
-	  res.render("user",{username:User.username , title:"Devices"});
+	  res.render("user",{username:User.username , title:"Devices", session:true});
 	}
   
    }
@@ -179,6 +186,9 @@ app.use("/",async (req,res,next)=>{
  });
 
  app.get("/logout", async (req,res)=>{
+	 if(!req.session.flag){
+		res.render("login",{error:"You are not logged in!"});
+	 }
 	let user=req.session.user.username;
 	req.session.flag=undefined;
 	req.session.destroy();
