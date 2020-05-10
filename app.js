@@ -121,7 +121,7 @@ app.use("/",async (req,res,next)=>{
 	}
 	else {
 	  req.session.flag=true;
-	  res.render("user",{username:User.username});
+	  res.render("user",{username:User.username , title:"Devices"});
 	}
   
    }
