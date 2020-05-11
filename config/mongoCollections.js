@@ -19,5 +19,9 @@ const getCollectionFn = collection => {
 module.exports = {
  
   users: getCollectionFn("users"),
+<<<<<<< HEAD
   //albums: getCollectionFn("albums")
+=======
+ // albums: getCollectionFn("albums")
+>>>>>>> 3b6eae44fc80c93c8006d151f7f3b158e6379989
 };
