@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const exphbs = require("express-handlebars");
 const userData =  require("./data/login");
 const session = require('express-session');
+var xss = require("xss");
 
 
 app.use(bodyParser.json());
@@ -30,11 +31,11 @@ app.use(express.urlencoded({ extended: true }));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-
+/*/login system start/*/
 app.use("/",async (req,res,next)=>{
    
 	let time = new Date().toUTCString();
-	if(req.session.flag!==true){
+	if(xss(req.session.flag)!==true){
 		console.log("["+time+"]: "+req.method+" "+req.originalUrl+" (Non-Authenticated User)");
 	}else{
 		console.log("["+time+"]: "+req.method+" "+req.originalUrl+" (Authenticated User)");
@@ -54,7 +55,9 @@ app.use("/",async (req,res,next)=>{
 
 //login get 
   app.get("/login", async (req,res)=>{
+	
 	res.redirect("/");
+	
  }); 
 ///login post
 
@@ -81,8 +84,10 @@ app.use("/",async (req,res,next)=>{
 	}
    else{
 	   let flag=0;
-	let username=req.body.username;
-	let password=req.body.password;
+
+	let username=xss(req.body.username);
+	let password=xss(req.body.password);
+	let persistUsername=username; //saves the username to show on page incase login fails
 	if (/\@/.test(username)) {
         // Validate email address
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(username)) {
@@ -106,7 +111,8 @@ app.use("/",async (req,res,next)=>{
 	 if(User===false){
 	  res.status(401).render('login', { title:"Login",
 	  heading:"Login",
-	   error: "Invalid username." });
+	   error: "Invalid username or password",
+	   username:persistUsername });
 	  return;
 	 }
 	 else {
@@ -117,18 +123,20 @@ app.use("/",async (req,res,next)=>{
 	  else{
 		  res.status(401).render('login', {title:"Login",
 		  heading:"Login",
-		   error: "Invalid password." });
+		   error: "Invalid username or password" ,
+		username:persistUsername});
 		  return;
 	  }
 	}
 	if (!req.session.user) {
 	  res.render('login', { title:"Login",
 	  heading:"Login",
-	  error: "Invalid username or password." });
+	  error: "Invalid username or password.",
+	  username:persistUsername });
 	}
 	else {
 	  req.session.flag=true;
-	  res.render("user",{username:User.username , title:"Devices", session:true});
+	  res.render("user",{username:User.username , title:"Devices", session:true, message:"Logged In!"});
 	}
   
    }
@@ -145,12 +153,8 @@ app.use("/",async (req,res,next)=>{
 
  app.post("/creatUser",async(req,res)=>{
 
-	if(!req.body.username && !req.body.password){
-		res.render("login",{title:"Login",
-		heading:"Login",
-		error: "enter a username and password"});
-	  }
-	  else if(!req.body.username){
+	
+	  if(!req.body.username){
 		res.render("login",{title:"Login",
 		heading:"Login",
 		error: "enter a valid username"});
@@ -166,14 +170,15 @@ app.use("/",async (req,res,next)=>{
 		error: "enter a valid password"});
 	  }
 	  else{
-		let username=req.body.username;
-		let password=req.body.password;
-		let email=req.body.email;
+		let username=xss(req.body.username);
+		let password=xss(req.body.password);
+		let email=xss(req.body.email);
 		email=email.toLowerCase();
 	   let User=await userData.checkUser(username);
-		if(User===false){
+	   let UserEmail=await userData.checkEmail(email);
+		if(User===false && UserEmail===false){
 		 userData.createUser(username,email,password);
-		 res.redirect("/");
+		 res.render("login",{error:"User succesfully created .Please log in!"});
 		}
 		else {
 		  res.render('createUser',{error:"User or email already exists"})
@@ -188,12 +193,14 @@ app.use("/",async (req,res,next)=>{
  app.get("/logout", async (req,res)=>{
 	 if(!req.session.flag){
 		res.render("login",{error:"You are not logged in!"});
+		return;
 	 }
 	let user=req.session.user.username;
 	req.session.flag=undefined;
 	req.session.destroy();
-	res.redirect("/");
+	res.render("login",{error:"You are now logged out!"});
   });
+/*/login system end/*/
 
   
 app.listen(3000, () => {
@@ -201,20 +208,20 @@ app.listen(3000, () => {
 	console.log('Your routes will be running on http://localhost:3000');
 });
 
-// app.get("/", async (req, res) => {
-// 	res.render('user');
-// });
+
 
 app.get("/home", async (req, res) => {
 		res.render("user");
 });
 
-app.get("/phones", async (req, res) => {
-	res.render("List");
+//add compare device here
+app.get("/compare", async (req, res) => {
+	res.render("compare");
 });
 
-app.get("/search", async (req, res) => {
-	res.render("result");
+//add individual device page here
+app.get("/device", async (req, res) => {
+	res.render("device");
 });
 
 app.get("/reviews", async (req, res) => {
