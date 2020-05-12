@@ -1,8 +1,7 @@
 <div class="container">
 	<h2>Mobile phones</h2><br>
-    {{#if brand === {} || brand === null}}
-        <div>No devices</div>
-    {{else}}
+    
+    
 	<div id="blog" class="row"> 
 		{{#each brand}}
 		    <a href="/getMobileById?dev_id={{this._id}}" target="_blank">
@@ -16,5 +15,5 @@
         
         <div class="col-md-12 gap10"></div>
     </div>
-    {{/if}}
+    
 </div>
