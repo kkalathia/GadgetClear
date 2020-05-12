@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const exphbs = require("express-handlebars");
-const userData =  require("./data/login");
+const userData =  require("./data/login"); //get user details for here
 const session = require('express-session');
 var xss = require("xss");
 
@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded(
   {extended:true}
 ));
 const static = express.static(__dirname + '/public');
+
+//const session = require('express-session');
 
 app.use(session({
 	key:"AuthCookie",
@@ -28,6 +30,14 @@ app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(__dirname + '/public'));
+const expressSession = require('express-session')({
+	secret: 'secret',
+	resave: false,
+	saveUninitialized: false
+  });
+  app.use(expressSession);
+app.use(bodyParser.json());
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
@@ -210,13 +220,9 @@ app.listen(3000, () => {
 
 
 
-app.get("/home", async (req, res) => {
-		res.render("user");
-});
-
 //add compare device here
 app.get("/compare", async (req, res) => {
-	res.render("compare");
+	res.render("stars");
 });
 
 //add individual device page here
@@ -224,9 +230,33 @@ app.get("/device", async (req, res) => {
 	res.render("device");
 });
 
-app.get("/reviews", async (req, res) => {
-	res.render("review");
+
+//calculates the stars per user
+app.post("/starCalc", async (req, res) => {
+
+	score=xss(req.body.value);
+	console.log(score);
+
+	//check user in device details page and add a mongo doc
+	// if(user exists overwrite){}
+// 	data={
+// 		user:user_id,
+// 		{
+// 			rating=score;
+// 		}
+// 	}
+// }
+// else{
+// 	insert into device page
+// }
+
+
+// });
+
 });
+
+
+
 
 
 app.use("*",async (req,res)=>{
