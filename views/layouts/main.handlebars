@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../../public/site.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<title>{{title}}</title>
+</head>
+
+<body>
+	<nav>
+		<div class="nav">
+      <img src="../../public/logo.png" alt="">
+			<ul class="topnav">
+				<li>
+					<a href="/home">Home</a>
+				</li>
+				<li>
+					<a href="/phones">All phones</a>
+				</li>
+				<li>
+					<a href="/search">Search for</a>
+				</li>
+				<li>
+					<a href="/reviews">Reviews</a>
+				</li>
+				<li style="float: right;">
+				    {{#if session}}
+                    <a href="/logout">Logout</a>
+					{{else}}
+					 <a href="/login">Login</a>
+                {{/if}}	
+					
+				</li>
+			</ul>
+		</div>
+
+	</nav>
+
+	<main class="wrapper">
+		{{{body}}}
+	</main>
+</body>
+</html>
