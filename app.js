@@ -97,41 +97,41 @@ app.post("/login",async(req,res)=>{
 	  	error: "enter a valid password"});
 	}
    	else {
-	   	let flag=0;
-		let username=xss(req.body.username);
-		let password=xss(req.body.password);
-		let persistUsername=username; //saves the username to show on page incase login fails
+	   	let flag = 0;
+		let username = xss(req.body.username);
+		let password = xss(req.body.password);
+		let persistUsername = username; //saves the username to show on page incase login fails
 		
 		if (/\@/.test(username)) {
         // Validate email address
         	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(username)) {
-				flag =1;
+				flag = 1;
 			}
 		}
 
 		let User;
 
-	 	if(flag===0)
-			User=await userData.checkUser(username);
+	 	if(flag === 0)
+			User = await userData.checkUser(username);
 	 	else {
-			username=username.toLowerCase();
-		 	User=await userData.checkEmail(username);
+			username = username.toLowerCase();
+		 	User = await userData.checkEmail(username);
 		}
 
 		//console.log(User);
-		if (User===false) {
+		if (User === false) {
 			res.status(401).render('phone/login', { 
 				title:"Login",
 	  			heading:"Login",
 	   			error: "Invalid username or password",
-		    	username:persistUsername 
+		    	username: persistUsername 
 			});
 		   
 	  		return;
 		}
 	 	else {
 	  		if (await bcrypt.compareSync(password, User.hashedPassword)) {
-				req.session.user=User;
+				req.session.user = User;
 			}
 	  		else {
 		  		res.status(401).render('phone/login', {
@@ -154,12 +154,12 @@ app.post("/login",async(req,res)=>{
 			});
 		}
 		else {
-	  		req.session.flag=true;
+	  		req.session.flag = true;
 	  		res.render("phone/user", {
-				username:User.username, 
-				title:"Devices", 
-				session:true, 
-				message:"Logged In!"
+				username: User.username, 
+				title: "Devices", 
+				session: true, 
+				message: "Logged In!"
 			});
 		}  
    	}  
@@ -167,22 +167,22 @@ app.post("/login",async(req,res)=>{
   
 
 //create a new user
-app.get("/creatUser", async (req,res) => {
+app.get("/creatUser", async (req, res) => {
 	res.render("phone/createUser");
 });
 
-app.post("/creatUser", async (req,res) => {
+app.post("/creatUser", async (req, res) => {
 	if (!req.body.username) {
 		res.render("phone/login", {
-			title:"Login",
-			heading:"Login",
+			title: "Login",
+			heading: "Login",
 			error: "Enter a valid username"
 		});
 	}
 	else if (!req.body.email) {
 		res.render("phone/login", {
-			title:"Login",
-			heading:"Login",
+			title: "Login",
+			heading: "Login",
 			error: "Enter a valid email"
 		});
 	}
@@ -207,12 +207,12 @@ app.post("/creatUser", async (req,res) => {
 			userData.createUser(username,email,password);
 			 
 		 	res.render("phone/login", {
-				error:"User succesfully created. Please log in!"
+				error: "User succesfully created. Please log in!"
 			});
 		}
 		else {
 			res.render('phone/createUser', {
-				error:"User or email already exists"
+				error: "User or email already exists"
 			})
 		}
 	}
@@ -220,7 +220,7 @@ app.post("/creatUser", async (req,res) => {
 
 app.get("/logout", async (req,res) => {
 	if (!req.session.flag) {
-		res.render("phone/login",{error:"You are not logged in!"});
+		res.render("phone/login", {error:"You are not logged in!"});
 
 		return;
 	}
@@ -231,7 +231,7 @@ app.get("/logout", async (req,res) => {
 	req.session.destroy();
 
 	res.render("phone/login", {
-		error:"You are now logged out!"
+		error: "You are now logged out!"
 	});
 });
 /*/login system end/*/
@@ -244,9 +244,9 @@ app.get('/login', async (req, res) => {
 // 	res.render('phone/homepage');
 // })
 
-app.use("*",async (req,res)=>{
-	res.status(404).json({error:"Page Not Found"});
-});
+// app.use("*",async (req,res)=>{
+// 	res.status(404).json({error: "Page Not Found"});
+// });
 
 configRoutes(app);
 
