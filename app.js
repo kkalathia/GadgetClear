@@ -3,6 +3,14 @@ const app = express();
 const static = express.static(__dirname + '/public');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
+const { exec } = require('child_process');
+const mongoose = require('mongoose')
+
+
+mongoose.connect('mongodb://localhost:27017/Gadget_Clear', function(){
+    /* Drop the DB */
+    mongoose.connection.db.dropDatabase();
+});
 
 const handlebarsInstance = exphbs.create({
 	defaultLayout: 'main'
@@ -17,7 +25,18 @@ app.set('view engine', 'handlebars');
 
 configRoutes(app);
 
-app.listen(3000, () => {
+app.listen(3000, async() => {
+	// Run node command to create database
+	setTimeout(() => {
+		exec("node ./data/phonedb.js", (err, stdout, stderr) => {
+			if(!err){
+			console.log('sucess', stdout)
+			}
+			else{
+				console.log(err);
+			}
+		})
+	}, 300);  
 	console.log("We've now got a server!");
 	console.log('Your routes will be running on http://localhost:3000');
 });
