@@ -7,7 +7,7 @@ router.get('/search', async (req, res) => {
     res.render('phone/homepage');
 });
 
-router.get('/phonelst', async (req, res) => {
+router.get('/phonelist', async (req, res) => {
     res.render('phone/phonelist');
 });
 
@@ -58,8 +58,5 @@ router.get('/buy', async (req, res) => {
     })
 })
 
-function escapeRegex(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
 
 module.exports = router;
