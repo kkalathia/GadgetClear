@@ -4,70 +4,33 @@ const fetchDetails = require('../data/fetchDetails');
 
 
 router.get('/', async (req, res) => {
-  // if (req.query.brand) {
-  //   const regex = new RegExp(escapeRegex(req.query.brand), 'gi');
-  //
-  //   mobiles.find({brand: regex},function(err,getDisplayDetails){
-  //       res.render('phone/phonelist', {brand: getDisplayDetails});
-  //     });
-  //   }else {
-      res.render('phone/homepage');
-    // }
-
+    res.render('phone/homepage');
 });
 
 router.get('/phonelst', async (req, res) => {
-    // if (req.query.brand) {
-    //   const regex = new RegExp(escapeRegex(req.query.brand), 'gi');
-    //
-    //   mobiles.find({brand: regex},function(err,getDisplayDetails){
-    //       res.render('phone/phonelist', {brand: getDisplayDetails});
-    //     });
-    //   }else {
-        console.log('as')
-        res.render('phone/phonelist');
-      // }
-  
-  });
-  
-
+    res.render('phone/phonelist');
+});
 
 router.post('/submit', async (req, res) => {
-
-  // if (req.query.brand) {
-  //   const regex = new RegExp(escapeRegex(req.query.brand), 'gi');
-  //
-  //     mongoCollections.mobiles.find({brand: regex},function(err,getDisplayDetails){
-  //       res.render('phone/phonelist', {brand: getDisplayDetails});
-  //     });
-  //   }
-
-
-
-
     const brand = req.body.brand;
     const display = req.body.display;
     const processor = req.body.processor;
     const storage = req.body.storage;
-    console.log(brand);
-    console.log(display);
-    console.log(processor);
-    console.log(storage);
-    const getDevice = await fetchDetails.getDevice(brand,display,processor,storage)
-    // const getDeviceDisplay = await fetchDetails.getDeviceDisplay(getDeviceByBrand);
 
-    
-    // //const getDeviceBrand = await fetchDetails.getDeviceBrand(brand)
-    // const getDeviceProcessor = await fetchDetails.getDeviceProcessor(processor)
-    // const getDeviceStorage = await fetchDetails.getDeviceStorage(storage)
-    // console.log('details: ', getDeviceDisplay)
-    // console.log('brand: ', getDeviceBrand)
-    // console.log('processor: ', getDeviceProcessor)
-    // console.log('storage: ', getDeviceStorage)
+    const getDevice = await fetchDetails.getDevice(brand, display, processor, storage)
+
     res.render('phone/phonelist', {
-       brand: getDevice,
+       brand: getDevice
     });
 });
+
+router.get('/getMobileById', async (req,res) => {
+    const getDeviceById = await fetchDetails.getDeviceById(req.query.dev_id);
+
+    res.render('phone/phonedetails', {
+        brand: getDeviceById,
+    });
+})
 
 router.post('/compare', async (req, res) => {
     const deviceOne = req.body.deviceOne;
@@ -96,8 +59,7 @@ router.get('/buy', async (req, res) => {
 })
 
 function escapeRegex(text) {
-
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-
 }
+
 module.exports = router;
