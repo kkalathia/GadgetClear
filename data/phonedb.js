@@ -31,7 +31,6 @@ const fetchDevices = async (brandUrl) => {
 
     if (index === $(".makers ul li").length - 1) {
       finalDevice.forEach(async (item) => {
-        console.log('item-- ',item)
         const mobileCollection = await mobiles();
         const insertInfo = await mobileCollection.insertOne(item).catch(console.log);
       });
@@ -65,8 +64,12 @@ const getResults = async (url) => {
     device_specs[prop] = item;
   });
 
+  let img = $(".specs-photo-main a img")
   let name =$(".article-info .article-info-line .specs-phone-name-title").text().split('.').join(' ')
-  device_specs['device']= name;
+
+  device_specs['device'] = name;
+  device_specs['image'] = img.attr().src;
+
   newDevice[name] = device_specs;
 
   return device_specs;
