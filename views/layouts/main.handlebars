@@ -1,36 +1,60 @@
+{{!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetClear</title>
+    <link rel="stylesheet" href="/public/css/site.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <main>
+        {{{body}}}
+    </main>
+</body>
+</html> --}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="../../public/site.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/site.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<title>{{title}}</title>
 </head>
 
 <body>
 	<nav>
 		<div class="nav">
-      <img src="../../public/logo.png" alt="">
+        <img src="../../public/logo.png" alt="">
 			<ul class="topnav">
 				<li>
 					<a href="/home">Home</a>
 				</li>
 				<li>
-					<a href="/phones">All phones</a>
+					<a href="/compare">Compare</a>
 				</li>
 				<li>
-					<a href="/search">Search for</a>
+					<a href="/search">Search</a>
 				</li>
 				<li>
 					<a href="/reviews">Reviews</a>
 				</li>
 				<li style="float: right;">
-					<a href="/logout">Logout</a>
+					<!-- set session to true in your route to change login or logout button check post(login) as example  -->
+				    {{#if session}}
+                    <a href="/logout">Logout</a>
+					{{else}}
+					 <a href="/login">Login</a>
+                    {{/if}}	
 				</li>
 			</ul>
 		</div>
-
 	</nav>
 
 	<main class="wrapper">
@@ -38,3 +62,4 @@
 	</main>
 </body>
 </html>
+
