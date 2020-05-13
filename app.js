@@ -12,10 +12,10 @@ const mongoose = require('mongoose')
 var xss = require("xss");
 
 
-mongoose.connect('mongodb://localhost:27017/Gadget_Clear', function(){
-    /* Drop the DB */
-    mongoose.connection.db.dropDatabase();
-});
+// mongoose.connect('mongodb://localhost:27017/Gadget_Clear', function(){
+//     /* Drop the DB */
+//     mongoose.connection.db.dropDatabase();
+// });
 
 const handlebarsInstance = exphbs.create({
 	defaultLayout: 'main'

@@ -5,6 +5,8 @@ const xss=require('xss');
 const mongoCollections = require('../config/mongoCollections');
 const phones = mongoCollections.mobiles;
 const { ObjectId } = require('mongodb')
+const comments = require('../data/comments');
+//ObjectId = require('mongodb').ObjectID;
 
 
 router.get('/search', async (req, res) => {
@@ -32,11 +34,47 @@ router.post('/submit', async (req, res) => {
 router.get('/getMobileById', async (req,res) => {
     const getDeviceById = await fetchDetails.getDeviceById(req.query.dev_id);
     req.session.deviceToRate=req.query.dev_id;
+        
+    let the_comments = await comments.getcommentByDevice(getDeviceById);
+
     res.render('phone/phonedetails', {
         brand: getDeviceById,
+        username: the_comments.author,
+        posts: the_comments,
         rating: getDeviceById.overallRating
     });
 })
+
+router.post('/getMobileById/comment', async (req, res) => {
+    //console.log("==================");
+    const getDeviceById = await fetchDetails.getDeviceById(req.session.deviceToRate);
+    let postContent = req.body.postContent;
+    
+    try{
+		let add_comment = await comments.createcomments(getDeviceById,"author",postContent);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+})
+
+router.post("/getMobileById/removeComment", async (req, res) => {
+    let comment = req.body.postId;
+    if(typeof comment == "string"){
+        let id = ObjectId(comment);
+    }
+	//console.log(typeof id);
+
+	try{
+		let remove_comment = await comments.deletecomment(id);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+
+});
 
 router.post('/compare', async (req, res) => {
     const deviceOne = req.body.deviceOne;
@@ -66,7 +104,7 @@ router.get('/buy', async (req, res) => {
 
 router.post("/starCalc", async (req, res) => {
     
-    console.log(req.session.deviceToRate);
+    //console.log(req.session.deviceToRate);
     const score=xss(req.body.value);
     deviceId=ObjectId(req.session.deviceToRate);
     //console.log(req.session.user._id);
@@ -83,7 +121,7 @@ let flag=1; //checks if inserted in for loop
 
 for(let i=0;i<await getDevice.UserRating.length;i++){
     if(await getDevice.UserRating[i].userid===userid){
-            console.log("here");
+            //console.log("here");
         
          flag=0;
             await mobileCollection.updateOne( {_id : deviceId , "UserRating.score" : await getDevice.UserRating[i].score } , 
@@ -99,13 +137,13 @@ for(let i=0;i<await getDevice.UserRating.length;i++){
     
    
     const check=getDevice.UserRating;
-    console.log(check);
+    //console.log(check);
 
     //update overall rating
     let finalRating=parseFloat(0);
     for(let j=0;j<await getDevice.UserRating.length;j++){
      
-        console.log("score"+getDevice.UserRating[j].score);
+       // console.log("score"+getDevice.UserRating[j].score);
        finalRating=finalRating+await getDevice.UserRating[j].score;
     
     }
@@ -116,7 +154,7 @@ for(let i=0;i<await getDevice.UserRating.length;i++){
     else{
         finalRating=finalRating/ratingLength;
     }
-    console.log("final"+finalRating);
+    //console.log("final"+finalRating);
     await mobileCollection.updateOne({_id:deviceId }, {$set: {overallRating:finalRating}});
 
 

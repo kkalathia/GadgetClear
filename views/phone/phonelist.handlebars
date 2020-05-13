@@ -1,19 +1,24 @@
 <div class="container">
-	<h2>Mobile phones</h2><br>
-    
-    
-	<div id="blog" class="row"> 
-		{{#each brand}}
-		    <a href="/getMobileById?dev_id={{this._id}}" target="_blank">
-                <div class="col-md-4 blogShort">
-                    <h3>{{this.device}}</h3>
-                    <img src="{{this.image}}" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                    <a class="btn btn-blog pull-right marginBottom10 d-none" href="http://bootsnipp.com/user/snippets/2RoQ">Get details</a> 
-                </div>
-		    </a>
-        {{/each}}
+	<h2>Devices</h2><br>
+
+	<div id="blog" class="row">
+        {{#if brand}}
+            {{#each brand}}
+                <a href="/getMobileById?dev_id={{this._id}}" target="_blank">
+                    <div class="col-md-4 blogShort">
+                        <h3>{{this.device}}</h3>
+                        <img src="{{this.image}}" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
+                        <a class="btn btn-blog pull-right marginBottom10 d-none" href="http://bootsnipp.com/user/snippets/2RoQ">Get details</a> 
+                    </div>
+                </a>
+            {{/each}}
+        {{else}}
+            <div class="alert alert-danger" role="alert">
+                No devices found. Please try selecting different options in filter.
+            </div>
+        {{/if}}
         
         <div class="col-md-12 gap10"></div>
     </div>
-    
 </div>
+

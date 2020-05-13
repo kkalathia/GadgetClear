@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const mobiles = mongoCollections.mobiles;
 
 const siteUrl = "https://www.gsmarena.com/";
+const brandUrlArr = ["https://www.gsmarena.com/samsung-phones-9.php", "https://www.gsmarena.com/apple-phones-48.php", "https://www.gsmarena.com/google-phones-107.php"];
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -49,7 +50,8 @@ const fetchBrands = async () => {
   // });
 
   // Change the url of the brand here to generate the list of different brand's devices
-  fetchDevices('https://www.gsmarena.com/samsung-phones-9.php').catch(console.log);
+  brandUrlArr.forEach(link => fetchDevices(link));
+  // fetchDevices('https://www.gsmarena.com/samsung-phones-9.php').catch(console.log);
 }
 
 // Fetch the device's specifications
