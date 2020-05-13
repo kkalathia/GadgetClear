@@ -6,57 +6,47 @@ const { ObjectId } = require('mongodb')
 
 
 async function createUser(username,email,password){
+    const userCollection = await users();
     
-    //console.log(title);
-		
-		
-		const userCollection = await users();
-        hashedPassword=bcrypt.hashSync(password, 10)
-		let newUser = {
-             username,
-             email,
-             hashedPassword,
-             myDevices:[],
-             wishList:[]
-		};
+    hashedPassword=bcrypt.hashSync(password, 10)
+    
+    let newUser = {
+        username,
+        email,
+        hashedPassword,
+        myDevices:[],
+        wishList:[]
+	};
 
-		const insertInfo = await userCollection.insertOne(newUser);
-		if (insertInfo.insertedCount === 0) throw 'Could not add user';
+	const insertInfo = await userCollection.insertOne(newUser);
+	if (insertInfo.insertedCount === 0) throw 'Could not add user';
 
-		//const newId = insertInfo.insertedId;
-
-		
-		return true;
+    return true;
 }
 
 //checks for username in document and returns userdata with that username
 async function checkUser(username){
-   
     const userCollection = await users();
-    
-const usersindb = await userCollection.findOne({ username: username });
+    const usersindb = await userCollection.findOne({ username: username });
 
-if (usersindb === null) {
-    return false;
+    if (usersindb === null) {
+        return false;
+    }
+    else {
+        return usersindb;
+    }
 }
-else{
-    return usersindb;
-}
- }
 
-
- async function checkEmail(email){
-   
+async function checkEmail(email){
     const userCollection = await users();
-    
-const emailindb = await userCollection.findOne({ email: email });
+    const emailindb = await userCollection.findOne({ email: email });
 
-if (emailindb === null) {
-    return false;
+    if (emailindb === null) {
+        return false;
+    }
+    else{
+        return emailindb;
+    }
 }
-else{
-    return emailindb;
-}
- }
 
 module.exports={createUser,checkUser,checkEmail};

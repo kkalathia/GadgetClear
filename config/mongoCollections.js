@@ -9,6 +9,7 @@ const getCollectionFn = collection => {
     if (!_col) {
       const db = await dbConnection();
       _col = await db.collection(collection);
+      console.log('colllllll',_col)
     }
 
     return _col;
@@ -17,11 +18,6 @@ const getCollectionFn = collection => {
 
 /* Now, you can list your collections here: */
 module.exports = {
- 
-  users: getCollectionFn("users"),
-<<<<<<< HEAD
-  //albums: getCollectionFn("albums")
-=======
- // albums: getCollectionFn("albums")
->>>>>>> 3b6eae44fc80c93c8006d151f7f3b158e6379989
+  mobiles: getCollectionFn("mobiles"),
+  users: getCollectionFn("users")
 };

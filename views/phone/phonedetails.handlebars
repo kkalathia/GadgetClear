@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="table-title">
+        <h1>{{brand.device}}</h1>
+        <span class="back-span"><a href="/search" class="button small">Back</a></span>
+    </div>
+        
+    <table class="table table-bordered success">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{brand.image}}" alt="{{brand.device}}"></td>
+            </tr>
+            <tr>
+                <th>Device</th>
+                <td>{{brand.device}}</td>
+            </tr>
+            <tr>
+                <th class="info">Technology</th>
+                <td>{{brand.Technology}}</td>
+            </tr>
+            <tr>
+                <th class="info">Speed</th>
+                <td>{{brand.Speed}}</td>
+            </tr>
+            <tr>
+                <th class="info">Announced</th>
+                <td>{{brand.Announced}}</td>
+            </tr>
+            <tr>
+                <th class="info">Weight:</th>
+                <td>{{brand.Weight}}</td>
+            </tr>
+            <tr>
+                <th class="info">OS</th>
+                <td>{{brand.OS}}</td>
+            </tr>
+            <tr>
+                <th class="info">Processor</th>
+                <td>{{brand.Chipset}}</td>
+            </tr>
+            <tr>
+                <th class="info" valign="top">Memory</th>
+                <td>{{brand.Internal}}</td>
+            </tr>
+            <tr>
+                <th class="info">Display Size</th>
+                <td>{{brand.Size}}</td>
+            </tr>
+            <tr>
+                <th class="info">Display Type</th>
+                <td>{{brand.Type}}</td>
+            </tr>
+            <tr>
+                <th class="info">Buy</th>
+                <td>
+                    <a href="https://www.amazon.com/s?k={{brand.device}}+name&ref=is_s" class="buy">Buy</a>
+                </td>
+            </tr>
+            <tr>
+                <th class="info video">Device video</th>
+                <td>
+                    <iframe width="620" height="350" src="https://www.youtube.com/embed?listType=search&list={{brand.device}}">
+                    </iframe>
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <br>
+</div>
