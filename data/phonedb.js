@@ -69,7 +69,8 @@ const getResults = async (url) => {
 
   device_specs['device'] = name;
   device_specs['image'] = img.attr().src;
-  device_specs['rating']=[];
+  device_specs['UserRating']=[];
+  device_specs['overallRating']=0;
 
   newDevice[name] = device_specs;
 

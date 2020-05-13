@@ -236,9 +236,9 @@ app.get("/logout", async (req,res) => {
 });
 /*/login system end/*/
 
-app.get('/login', async (req, res) => {
-	res.render('phone/login');
-});
+// app.get('/login', async (req, res) => {
+// 	res.render('phone/login');
+// });
 
 // app.get('/search', async (req, res) => {
 // 	res.render('phone/homepage');
@@ -247,6 +247,9 @@ app.get('/login', async (req, res) => {
 // app.use("*",async (req,res)=>{
 // 	res.status(404).json({error: "Page Not Found"});
 // });
+//calculates the stars per user
+
+
 
 configRoutes(app);
 
@@ -265,3 +268,4 @@ app.listen(3000, async() => {
 	console.log("We've now got a server!");
 	console.log('Your routes will be running on http://localhost:3000');
 });
+

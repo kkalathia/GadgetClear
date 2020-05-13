@@ -39,7 +39,7 @@ const getDeviceById = async (id) => {
 
     const mobileCollection = await mobiles();
     const res = await mobileCollection.findOne({_id:  o_id});
-    console.log(res);
+    //console.log(res);
     return res;
 }
 
