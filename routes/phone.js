@@ -34,20 +34,21 @@ router.post('/submit', async (req, res) => {
 router.get('/getMobileById', async (req,res) => {
     const getDeviceById = await fetchDetails.getDeviceById(req.query.dev_id);
     req.session.deviceToRate=req.query.dev_id;
-        
+console.log(getDeviceById);
     let the_comments = await comments.getcommentByDevice(getDeviceById);
 
     res.render('phone/phonedetails', {
         brand: getDeviceById,
         username: the_comments.author,
-        posts: the_comments
+        posts: the_comments,
+        rating: getDeviceById.overallRating
     });
 })
 
 router.post('/getMobileById/comment', async (req, res) => {
-    console.log("==================");
-    console.log(req.session.user);
+    //console.log("==================");
     const getDeviceById = await fetchDetails.getDeviceById(req.session.deviceToRate);
+    let postContent = req.body.postContent;
     const userinfo = req.session.user;
     let author = "";
     if(userinfo != undefined && userinfo != null){
@@ -55,7 +56,6 @@ router.post('/getMobileById/comment', async (req, res) => {
     }else{
         author = "anonymous";
     }
-    let postContent = req.body.postContent;
     
     try{
 		let add_comment = await comments.createcomments(getDeviceById,author,postContent);
@@ -166,6 +166,7 @@ for(let i=0;i<await getDevice.UserRating.length;i++){
 
 
 });
+
 
 
 module.exports = router;
