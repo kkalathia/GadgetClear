@@ -7,7 +7,7 @@ function postNewPost(userId){
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange=function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert("Ssuccessfully added!");
+			//alert("Ssuccessfully added!");
 			window.location.replace("/reviews");
 		}else if(this.readyState == 4 && this.status == 400){
 			alert("There was a problem adding this post!");
@@ -64,7 +64,7 @@ function removePost(author_name,userId,postId){
 		let xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange=function() {
 			if (this.readyState == 4 && this.status == 200) {
-				alert("Successfully deleted!");
+				//alert("Successfully deleted!");
 				window.location.replace("/reviews");
 			}else if(this.readyState == 4 && this.status == 400){
 				alert("There was a problem deleting this post!");

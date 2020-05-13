@@ -244,7 +244,6 @@ h2 {
     margin-bottom:10px; margin-right:10px;
 }
 
-<<<<<<< HEAD
 
 
 .fa-star:before {
@@ -278,7 +277,6 @@ h2 {
     -moz-osx-font-smoothing: grayscale;
     transform: translate(0, 0);
   }
-=======
 * {
     box-sizing: border-box;
   }
@@ -520,7 +518,6 @@ h2 {
       
       border-width: 30px;
       border-radius: 50%;
-      -webkit-animation: spin 1s linear infinite;
   }
   .style-2 .loading-wheel {
       border-style: double;
@@ -571,4 +568,3 @@ h2 {
 .back {
     margin-left: auto;
 }
->>>>>>> 80b44b90a396ad5735b042582321cc7314589d88

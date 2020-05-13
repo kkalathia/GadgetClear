@@ -40,18 +40,25 @@ router.get('/getMobileById', async (req,res) => {
     res.render('phone/phonedetails', {
         brand: getDeviceById,
         username: the_comments.author,
-        posts: the_comments,
-        rating: getDeviceById.overallRating
+        posts: the_comments
     });
 })
 
 router.post('/getMobileById/comment', async (req, res) => {
-    //console.log("==================");
+    console.log("==================");
+    console.log(req.session.user);
     const getDeviceById = await fetchDetails.getDeviceById(req.session.deviceToRate);
+    const userinfo = req.session.user;
+    let author = "";
+    if(userinfo != undefined && userinfo != null){
+        author = userinfo.username;
+    }else{
+        author = "anonymous";
+    }
     let postContent = req.body.postContent;
     
     try{
-		let add_comment = await comments.createcomments(getDeviceById,"author",postContent);
+		let add_comment = await comments.createcomments(getDeviceById,author,postContent);
 		res.status(200).end();
 	}catch(e){
 		console.log("There was an error! " + e);

@@ -1,5 +1,5 @@
 let inProgressNewPost = false;
-function postNewComment(userId){
+function postNewComment(deviceid){
 	//console.log("the user is ++++++" + userId)
 	//let postTitle = document.getElementById("postTitle").value;
 	let postContent = document.getElementById("postContent").value;
@@ -7,8 +7,8 @@ function postNewComment(userId){
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange=function() {
 		if (this.readyState == 4 && this.status == 200) {
-			alert("Ssuccessfully added!");
-			window.location.replace("/getMobileById");
+            //alert("successfully added!");
+			window.location.replace("/getMobileById?dev_id="+deviceid);
 		}else if(this.readyState == 4 && this.status == 400){
 			alert("There was a problem adding this post. Please try again, or refresh the page.");
 		}
@@ -24,8 +24,7 @@ function postNewComment(userId){
 }
 
 
-function newComment(id){
-	console.log("This is the id " + id);
+function newComment(deviceid){
 	if(!inProgressNewPost){
 		inProgressNewPost = true;
 		let postParent = document.getElementById("postParent");
@@ -36,7 +35,7 @@ function newComment(id){
 
 		postSave.innerHTML = "Add new post!";
 		postSave.setAttribute("class", "post-entries");
-		postSave.setAttribute( "onClick", "javascript: postNewComment('"+ id +"');" );
+		postSave.setAttribute( "onClick", "javascript: postNewComment('"+ deviceid +"');" );
 
 		postContent.setAttribute("class", "post-entries");
 		postContent.setAttribute("placeholder", "Post Content");
@@ -64,7 +63,7 @@ function removePost(author_name,userId,postId){
 		let xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange=function() {
 			if (this.readyState == 4 && this.status == 200) {
-				alert("Successfully deleted!");
+                //alert("Successfully deleted!");
 				window.location.replace("/getMobileById");
 			}else if(this.readyState == 4 && this.status == 400){
 				alert("There was a problem deleting this post.!");
