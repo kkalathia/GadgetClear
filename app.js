@@ -10,6 +10,8 @@ const session = require('express-session');
 const { exec } = require('child_process');
 const mongoose = require('mongoose')
 var xss = require("xss");
+const cookies = require('cookie-parser');
+const reviews = require('./data/review');
 
 
 mongoose.connect('mongodb://localhost:27017/Gadget_Clear', function(){
@@ -25,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded(
   {extended:true}
 ));
+app.use(cookies());
 
 app.use(session({
 	key:"AuthCookie",
@@ -154,7 +157,8 @@ app.post("/login",async(req,res)=>{
 			});
 		}
 		else {
-	  		req.session.flag = true;
+			req.session.flag = true;
+			res.cookie("Auth_Cookie",User.username);
 	  		res.render("phone/user", {
 				username: User.username, 
 				title: "Devices", 
@@ -238,6 +242,59 @@ app.get("/logout", async (req,res) => {
 
 app.get('/login', async (req, res) => {
 	res.render('phone/login');
+});
+
+app.get("/reviews", async (req, res) => {
+	//console.log(req.cookies.Auth_Cookie);
+	let user = await userData.checkUser(req.cookies.Auth_Cookie);
+	//console.log(user);
+
+	try{
+	let allReviews = await reviews.getAllReview()
+	//console.log(user.username);
+	res.render("reviews",{
+		title: "Review page",
+		username: user.username,
+		posts: allReviews
+	});
+	console.log("rendered reviews")
+	}catch(e){
+		console.log(e);
+	}
+});
+
+app.post("/reviews/newReview", async (req, res) => {
+
+	let user = await userData.checkUser(req.cookies.Auth_Cookie);
+	//console.log(user)
+	//let name = req.body.username;
+	//console.log("the name is" + user.username);
+	let postTitle = req.body.postTitle;
+	let postContent = req.body.postContent;
+
+	try{
+		let addedPost = await reviews.createReviews(postTitle,user.username,postContent);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+
+});
+
+app.post("/reviews/removeReview", async (req, res) => {
+	let review = req.body.postId;
+	let id = ObjectId(review);
+	//console.log(typeof id);
+
+	try{
+		var removeReview = await reviews.deleteReview(id);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+
 });
 
 // app.get('/search', async (req, res) => {
