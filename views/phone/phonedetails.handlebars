@@ -1,84 +1,3 @@
-<div class="container">
-	<div class="row">
-        <h1> Mobile Phones</h1>
-            <table class="table table-bordered success">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <td><img src="{{brand.image}}" alt="{{brand.device}}"></td>
-                    </tr>
-                    <tr>
-                        <th>Device</th>
-                        <td>{{brand.device}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Technology</th>
-                        <td>{{brand.Technology}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Speed</th>
-                        <td>{{brand.Speed}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Announced</th>
-                        <td>{{brand.Announced}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Weight:</th>
-                        <td>{{brand.Weight}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">OS</th>
-                        <td>{{brand.OS}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Processor</th>
-                        <td>{{brand.Chipset}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info" valign="top">Memory</th>
-                        <td>{{brand.Internal}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Display Size</th>
-                        <td>{{brand.Size}}</td>
-                    </tr>
-                    <tr>
-                        <th class="info">Display Type</th>
-                        <td>{{brand.Type}}</td>
-                    </tr>
-                </thead>
-            </table>
-            <a class = "reviewbtn" href="../reviews">Reviews</a>
-            <div class="new-post">
-		<h2 id="favoriteIcon" class="bad-button-thats-not-a-button" onclick="newComment('{{username}}')">New</h2>
-    </div>
-
-<hr>
-<div id="postParent">
-	{{#each posts}}
-		<div class="post">
-			<div>
-				<h2 style="display: inline-block;"> {{this.device_name}} </h2>
-				<i class="material-icons" onclick="removePost('{{this.name}}','{{../username}}','{{this._id}}')">clear</i>
-			</div>
-			<h3 class="post-author">Author: {{this.name}} </h3>
-			<p>{{this.comment}}</p>
-			<hr>
-		</div>
-	{{else}}
-		<div class="post">
-			<h2>Currently no posts</h2>
-		</div>
-	
-	{{/each}}
-</div>
-
-<script src="/public/js/comment.js"></script>
-        <br>
-        <h6 style="margin-left: 100%;"><a href="/">Back</a></h6>
-	</div>
-</div>
 <div class="card">
     <div class="table-title">
         <h1>{{brand.device}}</h1>
@@ -148,3 +67,29 @@
     </table>
     <br>
 </div>
+<a class = "reviewbtn" href="../reviews">Reviews</a>
+            <div class="new-post">
+		<h2 id="favoriteIcon" class="bad-button-thats-not-a-button" onclick="newComment('{{username}}')">New</h2>
+    </div>
+
+<hr>
+<div id="postParent">
+	{{#each posts}}
+		<div class="post">
+			<div>
+				<h2 style="display: inline-block;"> {{this.device_name}} </h2>
+				<i class="material-icons" onclick="removePost('{{this.name}}','{{../username}}','{{this._id}}')">clear</i>
+			</div>
+			<h3 class="post-author">Author: {{this.name}} </h3>
+			<p>{{this.comment}}</p>
+			<hr>
+		</div>
+	{{else}}
+		<div class="post">
+			<h2>Currently no comments</h2>
+		</div>
+	
+	{{/each}}
+</div>
+
+<script src="/public/js/comment.js"></script>
