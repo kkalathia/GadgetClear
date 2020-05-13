@@ -40,6 +40,14 @@ async function getReviewById(id) {
     return review;
   }
 
+async function getReviewByDeviceName(name){
+  const reviewCollection = await reviews();
+  const review = await reviewCollection.findOne({device_name: device_name});
+
+  if(!review) throw 'Review not found';
+  return review;
+}
+
   async function deleteReview(id) {
     if (!id) throw 'You must provide an id to search for';
 
@@ -65,5 +73,6 @@ async function getReviewById(id) {
       getAllReview,
       getReviewById,
       deleteReview,
-      deleteAllReviews
+      deleteAllReviews,
+      getReviewByDeviceName
   }

@@ -20,5 +20,6 @@ const getCollectionFn = collection => {
 module.exports = {
   mobiles: getCollectionFn("mobiles"),
   users: getCollectionFn("users"),
-  reviews: getCollectionFn("reviews")
+  reviews: getCollectionFn("reviews"),
+  comments: getCollectionFn("comments")
 };

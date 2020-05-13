@@ -1,5 +1,5 @@
 <div class="new-post">
-		<h2 id="favoriteIcon" class="bad-button-thats-not-a-button" onclick="newPost('{{username}}')">New post</h2>
+		<h2 id="favoriteIcon" class="bad-button-thats-not-a-button" onclick="newPost('{{username}}')">New</h2>
 </div>
 
 <hr>
@@ -10,7 +10,7 @@
 				<h2 style="display: inline-block;"> {{this.device_name}} </h2>
 				<i class="material-icons" onclick="removePost('{{this.name}}','{{../username}}','{{this._id}}')">clear</i>
 			</div>
-			<h3 class="post-author">by {{this.name}} </h3>
+			<h3 class="post-author">Author: {{this.name}} </h3>
 			<p>{{this.comment}}</p>
 			<hr>
 		</div>

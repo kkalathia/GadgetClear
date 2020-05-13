@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const fetchDetails = require('../data/fetchDetails');
+const comments = require('../data/comments');
+ObjectId = require('mongodb').ObjectID;
 
 
 router.get('/search', async (req, res) => {
@@ -26,11 +28,45 @@ router.post('/submit', async (req, res) => {
 
 router.get('/getMobileById', async (req,res) => {
     const getDeviceById = await fetchDetails.getDeviceById(req.query.dev_id);
+    let the_comments = await comments.getcommentByDevice(getDeviceById);
 
     res.render('phone/phonedetails', {
         brand: getDeviceById,
+        username: the_comments.author,
+        posts: the_comments
     });
 })
+
+router.post('/getMobileById/comment', async (req, res) => {
+    //console.log("==================");
+    const getDeviceById = await fetchDetails.getDeviceById(req.query.dev_id);
+    let postContent = req.body.postContent;
+    
+    try{
+		let add_comment = await comments.createcomments(getDeviceById,"author",postContent);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+})
+
+router.post("/getMobileById/removeComment", async (req, res) => {
+    let comment = req.body.postId;
+    if(typeof comment == "string"){
+        let id = ObjectId(comment);
+    }
+	//console.log(typeof id);
+
+	try{
+		let remove_comment = await comments.deletecomment(id);
+		res.status(200).end();
+	}catch(e){
+		console.log("There was an error! " + e);
+		res.status(400).end();
+	}
+
+});
 
 router.post('/compare', async (req, res) => {
     const deviceOne = req.body.deviceOne;
