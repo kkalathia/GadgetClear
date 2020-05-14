@@ -1,0 +1,91 @@
+{{#if checkerror}}
+    <div class="compare-error center">No devices found. Please select different device.</div>
+    <div class="compare-error-back"><a href="/compare" class="button small">Back</a></div>
+{{else}}
+    {{#each devicelist}}
+        <div class="card">
+            <div class="table-title">
+                <h1>{{this.device}}</h1>
+                <span class="back-span"><a href="/search" class="button small">Back</a></span>
+            </div>
+                
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <td><img src="{{this.image}}" alt="{{this.device}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Device</th>
+                        <td>{{this.device}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Technology</th>
+                        <td>{{this.Technology}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Speed</th>
+                        <td>{{this.Speed}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Announced</th>
+                        <td>{{this.Announced}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Weight:</th>
+                        <td>{{this.Weight}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">OS</th>
+                        <td>{{this.OS}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Processor</th>
+                        <td>{{this.Chipset}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info" valign="top">Memory</th>
+                        <td>{{this.Internal}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Display Size</th>
+                        <td>{{this.Size}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Display Type</th>
+                        <td>{{this.Type}}</td>
+                    </tr>
+                    <tr>
+                        <th class="info">Buy</th>
+                        <td>
+                            <a href="https://www.amazon.com/s?k={{this.device}}&ref=is_s" class="buy">Buy</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="info video">Device video</th>
+                        <td>
+                            <iframe width="620" height="350" src="https://www.youtube.com/embed?listType=search&list={{this.device}}">
+                            </iframe>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="info">Ratings</th>
+                        <td>
+                            <ul class="list-inline rating-list">
+                                <li><i class="fa fa-star gray" id="star1"></i></li>
+                                <li><i class="fa fa-star gray" id="star2"></i></li>
+                                <li><i class="fa fa-star gray" id="star3"></i></li>
+                                <li><i class="fa fa-star gray" id="star4"></i></li>
+                                <li><i class="fa fa-star gray" id="star5"></i></li>
+                            </ul>
+                            <script src="../../public/js/stars.js"></script>
+                            <P>Help other users! Double click on a star to rate</P>
+                            <p>{{rating}}/5 stars</p>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+        </div>
+    {{/each}}
+{{/if}}

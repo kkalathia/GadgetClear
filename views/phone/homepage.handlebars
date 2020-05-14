@@ -1,0 +1,49 @@
+<form method="post" action="/submit">
+  <div class="filter-container">
+
+      <div class="select-container">
+           <label for="brand">Select Brand</label>
+           <select id="brand" name="brand" required>
+              <option value="" disabled>Select</option>
+               <option value="Samsung">Samsung</option>
+               <option value="Apple">Apple</option>
+               <option value="Google">Google</option>
+           </select>
+       </div>
+
+       <div class="select-container">
+           <label for="display">Screen Size</label>
+           <select id="display" name="display" required>
+             <option value="" disabled>Select</option>
+               <option value="6.1' - 7'">6.1' - 7'</option>
+               <option value="5.1' - 6'" >5.1' - 6'</option>
+               <option value="4.1' - 5'">4.1' - 5'</option>
+           </select>
+       </div>
+
+       <div class="select-container">
+           <label for="display">Storage</label>
+           <select id="storage" name="storage" required>
+             <option value="" disabled>Select</option>
+               <option value="32">32</option>
+               <option value="64" >64</option>
+               <option value="128" selected>128</option>
+           </select>
+       </div>
+
+       <div class="select-container">
+          <label for="processor">Select Processor</label>
+          <select id="processor" name="processor" required>
+            <option value="" disabled>Select</option>
+              <option value="Samsung Exynos">Samsung Exynos</option>
+              <option value="Qualcomm Snapdragon">Qualcomm Snapdragon</option>
+              <option value="MediaTek">MediaTek</option>
+              <option value="Apple Bionic">Apple Bionic</option>
+          </select>
+      </div>
+
+      <div class="select-container">
+          <button type="submit" class="primary default">Submit</button>
+      </div>
+  </div>
+</form>
